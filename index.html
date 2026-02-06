@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Patient Case File</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #f7c6cf, #f2aebd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Floating hearts */
+.hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+    bottom: -20px;
+    color: rgba(200, 0, 60, 0.6);
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    to { transform: translateY(-110vh) scale(1.4); opacity: 0; }
+}
+
+/* Card */
+.card {
+    width: 420px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    animation: fade 0.4s ease;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+h1 {
+    margin: 0 0 6px 0;
+    font-size: 24px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #f1d2da;
+    margin-bottom: 12px;
+}
+
+p {
+    line-height: 1.5;
+}
+
+ul {
+    padding-left: 18px;
+}
+
+button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #d94b64, #c73550);
+    color: white;
+}
+
+button.secondary {
+    background: #eee;
+    color: #444;
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+}
+
+img {
+    width: 100%;
+    border-radius: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts"></div>
+
+<div class="card" id="card"></div>
+
+<script>
+const card = document.getElementById("card");
+
+function screen(content) {
+    card.innerHTML = content;
+}
+
+/* Screens */
+
+screen(`
+<h1>Patient Case File</h1>
+<span class="tag">Confidential</span>
+<p><strong>PATIENT</strong><br>One (1) very lucky boyfriend</p>
+<p><strong>ATTENDING PHYSICIAN</strong><br>Dr.Riddhi Bohara♡</p>
+<button onclick="chief()">Open Case</button>
+`);
+
+function chief() {
+screen(`
+<h1>Chief Complaint</h1>
+<span class="tag">Ongoing</span>
+<p>Persistent warmth in the chest area when thinking about one incredibly intelligent, kind, and beautiful future doctor.</p>
+<button onclick="symptoms()">Review Symptoms</button>
+`);
+}
+
+function symptoms() {
+screen(`
+<h1>Symptoms</h1>
+<span class="tag">Well Documented</span>
+<ul>
+<li>Smiling for no reason</li>
+<li>Feeling calm just by hearing your voice</li>
+<li>Wanting to share every good moment with you</li>
+<li>Complete certainty that you're my favorite person</li>
+</ul>
+<button onclick="assessment()">Assessment</button>
+`);
+}
+
+function assessment() {
+screen(`
+<h1>Assessment</h1>
+<span class="tag">Stable</span>
+<p>Condition appears chronic and irreversible.</p>
+<p>Patient reports feeling safe, supported, and genuinely happy in your presence.</p>
+<button onclick="finalRec()">Final Recommendation</button>
+`);
+}
+
+function finalRec() {
+screen(`
+<h1>Final Recommendation</h1>
+<span class="tag">High Priority</span>
+<p>
+Proceed with Valentine's Day together.<br>
+Laugh a lot.<br>
+Eat something good with patient.
+</p>
+<p><strong>Will you be Patient's Valentine?</strong></p>
+<div class="row">
+<button onclick="accepted()">Accept ❤</button>
+<button class="secondary" onclick="error404()">Reject ✖</button>
+</div>
+`);
+}
+
+function error404() {
+screen(`
+<h1>Error 404: Option Not Found</h1>
+<span class="tag">Action Forbidden</span>
+<p>Wait! Your medical license doesn't cover rejection of this specific patient.</p>
+<p>Look how sad he'll be:</p>
+<div class="row">
+<img src="https://i.imgur.com/8Km9tLL.jpg">
+<img src="https://i.imgur.com/Z6a8k8Z.jpg">
+</div>
+<p>Please reconsider the correct medical procedure.</p>
+<button onclick="accepted()">Accept ❤</button>
+`);
+}
+
+function accepted() {
+screen(`
+<h1>Case Closed</h1>
+<span class="tag">Approved</span>
+<p>Recommendation accepted.</p>
+<p><strong>Prognosis:</strong> Extremely good.<br>Thank you, Doctor ❤</p>
+<button onclick="treatment()">View Treatment Plan</button>
+`);
+}
+
+function treatment() {
+screen(`
+<h1>Treatment Plan</h1>
+<span class="tag">Lifetime</span>
+<p>
+Daily laughter<br>
+Unlimited support<br>
+Quality time together<br>
+Lots of food dates<br>
+Endless affection
+</p>
+<button onclick="chief()">Restart Case</button>
+`);
+}
+
+/* Hearts generator */
+const hearts = document.querySelector(".hearts");
+setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (10 + Math.random() * 10) + "px";
+    h.style.animationDuration = (6 + Math.random() * 6) + "s";
+    hearts.appendChild(h);
+    setTimeout(() => h.remove(), 12000);
+}, 600);
+</script>
+
+</body>
+</html>
